@@ -15,9 +15,6 @@ class LoginController{
             
         ]);
     }
-    public static function logout(){
-        echo "Desde logout";
-    }
     public static function crear(Router $router){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
             
@@ -35,7 +32,26 @@ class LoginController{
         echo "Desde olvide";
 
         $router->render('login/olvide',[
-            
+
         ]);
+    }
+    public static function reestablecer(Router $router){
+        if($_SERVER['REQUEST_METHOD'] === "POST"){
+            
+        }
+        echo "Desde reestablecer";
+
+        $router->render('login/olvide',[
+
+        ]);
+    }
+    public static function logout(){
+        echo "Desde logout";
+    }
+    public static function mensaje(){
+        echo "Desde mensaje";
+    }
+    public static function confirmar(){
+        echo "Desde confirmar";
     }
 }

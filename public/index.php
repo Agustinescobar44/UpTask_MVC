@@ -14,9 +14,16 @@ $router->get('/logout', [LoginController::class, 'logout']);
 //olvido password
 $router->get('/olvide', [LoginController::class, 'olvide']);
 $router->post('/olvide', [LoginController::class, 'olvide']);
+//Reestablece el password olvidado
+$router->get('/reestablecer', [LoginController::class, 'reestablecer']);
+$router->post('/reestablecer', [LoginController::class, 'reestablecer']);
 //crear cuenta
 $router->get('/crear', [LoginController::class, 'crear']);
 $router->post('/crear', [LoginController::class, 'crear']);
+
+// Confirmacion de cuenta
+$router->get('/mensaje', [LoginController::class, 'mensaje']);
+$router->get('/confirmar', [LoginController::class, 'confirmar']);
 
 
 
