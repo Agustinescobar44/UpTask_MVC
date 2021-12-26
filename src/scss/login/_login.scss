@@ -1,0 +1,35 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+$color-login: v.$cyan;
+
+.login{
+    margin-top: 5rem;
+    .uptask{
+        background: linear-gradient(to right, $color-login 0%, lighten($color-login, 30%) 100%);
+        color: transparent;
+        background-clip: text;
+        font-size: 7rem;
+        text-align: center;
+
+        @include m.tablet{
+            font-size: 10rem;
+
+        }
+    }
+
+    input[type="submit"]{
+        @include m.boton($color-login , v.$blanco)
+    }
+    .acciones{
+        a{
+            color:$color-login;
+        }
+    }
+    .formulario{
+        label{
+            color:$color-login;
+            font-weight: bold;
+        }
+    }
+}
