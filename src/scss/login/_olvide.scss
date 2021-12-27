@@ -1,0 +1,25 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+$color-olvide: darken(v.$azul, 20%);
+
+.olvide{
+    margin-top: 5rem;
+    .uptask{
+       @include m.textoDegradado($color-olvide)
+    }
+    input[type="submit"]{
+        @include m.boton($color-olvide , v.$blanco)
+    }
+    .acciones{
+        a{
+            color:$color-olvide;
+        }
+    }
+    .formulario{
+        label{
+            color:$color-olvide;
+            font-weight: bold;
+        }
+    }
+}
