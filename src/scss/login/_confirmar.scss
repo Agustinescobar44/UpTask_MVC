@@ -1,0 +1,18 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+$color-confirmar: v.$indigo;
+
+.confirmar{
+    margin-top: 5rem;
+    .uptask{
+        @include m.textoDegradado($color-confirmar)
+    }
+    .acciones {
+        a{  
+            color: $color-confirmar;
+            font-size: 5rem;
+        }
+        justify-content: center;
+    }
+}
