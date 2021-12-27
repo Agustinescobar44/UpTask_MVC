@@ -1,0 +1,25 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+$color-reestablecer: v.$rosa;
+
+.reestablecer{
+    margin-top: 5rem;
+    .uptask{
+       @include m.textoDegradado($color-reestablecer)
+    }
+    input[type="submit"]{
+        @include m.boton($color-reestablecer , v.$blanco)
+    }
+    .acciones{
+        a{
+            color:$color-reestablecer;
+        }
+    }
+    .formulario{
+        label{
+            color:$color-reestablecer;
+            font-weight: bold;
+        }
+    }
+}
