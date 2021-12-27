@@ -1,1 +1,32 @@
-<h1>Crear Cuenta</h1>
+<div class="contenedor crear">
+    <?php include_once __DIR__ . '/../templates/nombre-sitio.php' ?>
+    <div class="contenedor-sm">
+        <p class="descripcion-pagina">Crear Cuenta</p>
+        <form action="/crear" class="formulario" method="POST">
+            <div class="campo">
+                <label for="email">E-mail: </label>
+                <input 
+                    type="email" 
+                    name="email" 
+                    id="email"
+                    placeholder="Tu Email"
+                />
+            </div>
+            <div class="campo">
+                <label for="password">Password: </label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    id="password"
+                    placeholder="Tu Password"
+                />
+            </div>
+
+            <input type="submit" value="Log in" class="boton">
+        </form>
+        <div class="acciones">
+            <a href="/">¿Ya tienes una cuenta? Inicia sesión</a>
+            <a href="/olvide">¿Olvidaste tu password?</a>
+        </div>
+    </div> <!-- contenedor sm -->
+</div>
