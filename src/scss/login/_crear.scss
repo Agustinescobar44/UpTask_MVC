@@ -1,0 +1,25 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+$color-crear: v.$morado;
+
+.crear{
+    margin-top: 5rem;
+    .uptask{
+       @include m.textoDegradado($color-crear)
+    }
+    input[type="submit"]{
+        @include m.boton($color-crear , v.$blanco)
+    }
+    .acciones{
+        a{
+            color:$color-crear;
+        }
+    }
+    .formulario{
+        label{
+            color:$color-crear;
+            font-weight: bold;
+        }
+    }
+}

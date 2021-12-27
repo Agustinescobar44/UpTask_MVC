@@ -1,8 +1,19 @@
 <div class="contenedor crear">
     <?php include_once __DIR__ . '/../templates/nombre-sitio.php' ?>
+
     <div class="contenedor-sm">
         <p class="descripcion-pagina">Crear Cuenta</p>
         <form action="/crear" class="formulario" method="POST">
+            <div class="campo">
+                <label for="nombre">Nombre: </label>
+                <input 
+                    type="text" 
+                    name="nombre" 
+                    id="nombre"
+                    placeholder="Tu Nombre"
+                />
+            </div>
+            
             <div class="campo">
                 <label for="email">E-mail: </label>
                 <input 
@@ -21,7 +32,15 @@
                     placeholder="Tu Password"
                 />
             </div>
-
+            <div class="campo">
+                <label for="password2">Repetir Password: </label>
+                <input 
+                    type="password" 
+                    name="password2" 
+                    id="password2"
+                    placeholder="Repite Tu Password"
+                />
+            </div>
             <input type="submit" value="Log in" class="boton">
         </form>
         <div class="acciones">
