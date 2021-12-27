@@ -9,19 +9,19 @@ class LoginController{
         if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         }
-        echo "Desde LOGIN";
 
-        $router->render('login/crear',[
-            
+        $router->render('login/login',[
+            'titulo' => 'Iniciar Sesion',
+
         ]);
     }
     public static function crear(Router $router){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
             
         }
-        echo "Desde Crear";
 
         $router->render('login/crear',[
+            'titulo' => 'Crear Cuenta',
 
         ]);
     }
@@ -29,29 +29,32 @@ class LoginController{
         if($_SERVER['REQUEST_METHOD'] === "POST"){
             
         }
-        echo "Desde olvide";
 
         $router->render('login/olvide',[
 
+            'titulo' => 'Olvide mi password'
         ]);
     }
     public static function reestablecer(Router $router){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
             
         }
-        echo "Desde reestablecer";
 
-        $router->render('login/olvide',[
+        $router->render('login/reestablecer',[
 
         ]);
     }
     public static function logout(){
         echo "Desde logout";
     }
-    public static function mensaje(){
-        echo "Desde mensaje";
+    public static function mensaje(Router $router){
+        $router->render('login/mensaje',[
+            'titulo' => 'Cuenta creada'
+        ]);
     }
-    public static function confirmar(){
-        echo "Desde confirmar";
+    public static function confirmar(Router $router){
+        $router->render('login/confirmar',[
+            'titulo' => 'Cuenta Confirmada'
+        ]);
     }
 }
