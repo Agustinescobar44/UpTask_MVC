@@ -1,2 +1,5 @@
 node_modules
 includes/database.php
+composer.json
+composer.lock
+vendor
