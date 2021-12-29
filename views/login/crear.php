@@ -3,6 +3,9 @@
 
     <div class="contenedor-sm">
         <p class="descripcion-pagina">Crear Cuenta</p>
+
+        <?php include_once __DIR__ . '/../templates/alertas.php' ?>
+
         <form action="/crear" class="formulario" method="POST">
             <div class="campo">
                 <label for="nombre">Nombre: </label>
@@ -11,6 +14,7 @@
                     name="nombre" 
                     id="nombre"
                     placeholder="Tu Nombre"
+                    value="<?php echo s($usuario->nombre) ?>"
                 />
             </div>
             
@@ -21,6 +25,7 @@
                     name="email" 
                     id="email"
                     placeholder="Tu Email"
+                    value="<?php echo s($usuario->email) ?>"
                 />
             </div>
             <div class="campo">
@@ -41,7 +46,7 @@
                     placeholder="Repite Tu Password"
                 />
             </div>
-            <input type="submit" value="Log in" class="boton">
+            <input type="submit" value="Crear Cuenta" class="boton">
         </form>
         <div class="acciones">
             <a href="/">¿Ya tienes una cuenta? Inicia sesión</a>
