@@ -9,3 +9,11 @@ $color-mensaje: v.$naranja;
         @include m.textoDegradado($color-mensaje)
     }
 }
+.email-usuario{
+    font-weight: 700;
+    font-size: 5rem;
+    margin-top: 5rem;
+    color: $color-mensaje;
+    text-align: center;
+    
+}
