@@ -8,13 +8,41 @@ use MVC\Router;
 
 class LoginController{
     public static function login(Router $router){
+        $alertas= [];
         if($_SERVER['REQUEST_METHOD'] === "POST"){
+            $usuario = new Usuario($_POST);
+            
+            $alertas = $usuario->validarLogin();
 
+            if(empty($alertas)){
+                $usuario = Usuario::where('email',$usuario->email);
+                if(!$usuario || !$usuario->confirmado){
+                    Usuario::setAlerta('error', 'Correo Invalido O Cuenta sin Confirmar');
+                }
+                else{
+                    //verifico el password
+                    if(!password_verify($_POST['password'], $usuario->password)){
+                        Usuario::setAlerta('error', 'Password invalido');
+
+                    }
+                    else{
+                        if(!isset($_SESSION)) session_start();
+                        $_SESSION['login'] = true;
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre;
+                        $_SESSION['email'] = $usuario->email;
+
+                        //Redireccionar
+                        header('Location: /dashboard');
+                    }
+                }
+            }
         }
-
+        
+        $alertas = Usuario::getAlertas();
         $router->render('login/login',[
             'titulo' => 'Iniciar Sesion',
-
+            'alertas' => $alertas
         ]);
     }
     public static function crear(Router $router){
@@ -56,41 +84,97 @@ class LoginController{
         ]);
     }
     public static function olvide(Router $router){
+        $alertas = [];
         if($_SERVER['REQUEST_METHOD'] === "POST"){
-            
+            $usuario = new Usuario($_POST);
+            $alertas = $usuario->validarEmail();
+
+            if(empty($alertas)){
+                //buscar el usuario
+                $usuario = Usuario::where('email' , $usuario->email);
+                if($usuario && $usuario->confirmado){
+                    //generar token
+                    unset($usuario->password2);
+                    $usuario->generarToken();
+                    //Actualizar Usuario
+                    $usuario->guardar();
+                    //Enviar Email
+                    $mail = new email($usuario->nombre,$usuario->email,$usuario->token);
+                    $mail->enviarRecuperar();
+                    //imprimir alerta
+                    header('Location: /mensaje');
+                }
+                else{
+                    Usuario::setAlerta('error', 'El usuario no existe');
+                }
+            }
         }
+        $alertas = Usuario::getAlertas();
 
         $router->render('login/olvide',[
-
             'titulo' => 'Olvide mi password'
+            ,'alertas' => $alertas
         ]);
     }
     public static function reestablecer(Router $router){
-        if($_SERVER['REQUEST_METHOD'] === "POST"){
-            
+        $token = s($_GET['token']);
+        if(!$token) header('Location: /');
+
+        $mostrar = true;
+
+        $usuario = Usuario::where('token', $token);
+
+        if(!$usuario){
+            Usuario::setAlerta('error' , 'Token Invalido');
+            $mostrar = false;
         }
 
-        $router->render('login/reestablecer',[
+        if($_SERVER['REQUEST_METHOD'] === "POST"){
+            $usuario->sincronizar($_POST);
 
+            $alertas = $usuario->validarPassword();
+            
+            if(empty($alertas)){
+
+                    //actualizar y hashaer password
+                    $usuario->hashearPassword();
+                    //eliminar token y acutalizar el password
+                    $usuario->confirmarUsuario();
+                    //redireccionar
+                    header('Location: /');
+
+            }
+        }
+        $alertas = Usuario::getAlertas();
+        $router->render('login/reestablecer',[
+            'titulo' => 'reestablecer password'
+            ,'alertas' => $alertas,
+            'mostrar' => $mostrar
         ]);
     }
     public static function logout(){
-        echo "Desde logout";
+        session_start();
+        $_SESSION = [];
+        header('Location: /');
     }
     public static function mensaje(Router $router){
         $router->render('login/mensaje',[
-            'titulo' => 'Cuenta creada'
         ]);
     }
     public static function confirmar(Router $router){
-        $usuario= Usuario::where('token' , $_GET['token']);
-        $alertas = [];
-        if($usuario){
+
+        $token = s($_GET['token']);
+
+        if(!$token) header('Location: /');
+
+        $usuario= Usuario::where('token' , $token);
+        if(!empty($usuario)){
             unset($usuario->password2);
             $usuario->confirmarUsuario();
         }else{
-            $alertas['errorGrave'][] = "TOKEN INVALIDO O EXPIRADO";
+            Usuario::setAlerta('error','Token invalido');
         }
+        $alertas = Usuario::getAlertas();
         $router->render('login/confirmar',[
             'titulo' => 'Cuenta Confirmada',
             'alertas' => $alertas

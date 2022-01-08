@@ -19,3 +19,7 @@ function isAuth() : void {
         header('Location: /');
     }
 }
+
+function esPost() :bool {
+    return $_SERVER['REQUEST_METHOD'] === "POST";
+}
